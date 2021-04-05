@@ -24,14 +24,23 @@
 
         <div class="products">
             <h2 class="call-action">Primeiro, seu prato</h2>
-            <ul class="list-products">
-                <li class="card-product" onClick="selectProduct()">
+            <ul class="list-products plates" >
+                <li class="card-product" onClick="selectProduct('plates', '1')">
                     <img src="img/pizza.jpeg" class="img-product">
                     <p class="name-product">Pizzaaa</p>
                     <p class="description-product">Massa, queijo, tomate e manjericão (mato)</p>
                     <div class="price-plus-icon">
                         <p class="price-product">R$ 14,90</p>
-                        <ion-icon name="checkmark-circle" class="check-selection"></ion-icon>
+                        <ion-icon name="checkmark-circle" class="check-selection not-selected"></ion-icon>
+                    </div>
+                </li>
+                <li class="card-product" onClick="selectProduct('plates', '2')">
+                    <img src="img/pizza.jpeg" class="img-product">
+                    <p class="name-product">Pizzaaa</p>
+                    <p class="description-product">Massa, queijo, tomate e manjericão (mato)</p>
+                    <div class="price-plus-icon">
+                        <p class="price-product">R$ 14,90</p>
+                        <ion-icon name="checkmark-circle" class="check-selection not-selected"></ion-icon>
                     </div>
                     
                 </li>
