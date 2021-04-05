@@ -17,6 +17,52 @@ function selectProduct(idfood, idproduct){
 }
 
 
+function populateProducts(idfood){
+    let num_prod = 6;
+    let name_p = "";
+    let price_p = 0;
+
+    if(idfood == "plates"){
+        name_p = "Pizza";
+        price_p = 15.0;
+    }
+    else if(idfood == "drinks"){
+        name_p = "Coquinha";
+        price_p = 2.0;
+    }
+    else if(idfood == "deserts"){
+        name_p = "Mousse";
+        price_p = 11.0
+    }
+    let names = [];
+    let prices = [];
+    for (let i = 0; i< num_prod; i++){
+        names.push(name_p + i);
+        prices.push(price_p + 0.8*i);
+    }
+
+    let selectclass = "." + idfood;
+    let list_products = document.querySelector(selectclass);
+    let products = list_products.children;
+    
+    let item_n = 0;
+    for(let item of products){
+        let nameplace = item.querySelector(".name-product");
+        console.log(nameplace);
+        nameplace.innerHTML = names[item_n];
+        console.log(item_n);
+
+        let priceplace = item.querySelector(".price-product");
+        priceplace.innerHTML = "R$ "+prices[item_n].toFixed(2).replace(/\./g, ',');
+        item_n = item_n + 1;
+    }
+
+}
+populateProducts("plates");
+populateProducts("drinks");
+populateProducts("deserts");
+
+
 function selectProduct1(){
 
     list_products = document.querySelector(".list-products")
