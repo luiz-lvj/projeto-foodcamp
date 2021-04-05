@@ -1,21 +1,31 @@
-function selectProduct(idfood, idproduct){
-    let selectclass = "." + idfood;
-    let list_products = document.querySelector(selectclass);
-    let product = list_products.children[idproduct -1];
 
-    for (let item of list_products.children){
-        if(item.classList.contains("selected")){
-            item.classList.remove("selected");
-            let selected_icon = item.querySelector("ion-icon");
-            selected_icon.classList.add("not-selected");
-        }
-    }
+/* Global Variables */
+let isplateselected = false;
+let isdrinkselected = false;
+let isdesertselected = false;
 
-    product.classList.add("selected");
-    selected_icon = product.querySelector("ion-icon");
-    selected_icon.classList.remove("not-selected");
-}
+let plate_selected_name = "";
+let plate_selected_price = 0;
+let drink_selected_name = "";
+let drink_selected_price = 0;
+let desert_selected_name = "";
+let desert_selected_price = 0;
 
+let platesnames = [];
+let platesprices = [];
+let drinksnames = [];
+let drinksprices = [];
+let desertsnames = [];
+let desertsprices = [];
+
+/* Initializing Page */
+disable_button();
+
+populateProducts("plates");
+populateProducts("drinks");
+populateProducts("deserts");
+
+/* Functions Definitions */
 
 function populateProducts(idfood){
     let num_prod = 6;
@@ -32,13 +42,26 @@ function populateProducts(idfood){
     }
     else if(idfood == "deserts"){
         name_p = "Mousse";
-        price_p = 11.0
+        price_p = 11.0;
     }
     let names = [];
     let prices = [];
     for (let i = 0; i< num_prod; i++){
         names.push(name_p + i);
         prices.push(price_p + 0.8*i);
+    }
+
+    if(idfood == "plates"){
+        platesnames = names;
+        platesprices = prices;
+    }
+    else if(idfood == "drinks"){
+        drinksnames = names;
+        drinksprices = prices;
+    }
+    else if(idfood == "deserts"){
+        desertsnames = names;
+        desertsprices = prices;
     }
 
     let selectclass = "." + idfood;
@@ -58,32 +81,70 @@ function populateProducts(idfood){
     }
 
 }
-populateProducts("plates");
-populateProducts("drinks");
-populateProducts("deserts");
 
+function selectProduct(idfood, idproduct){
+    if(idfood == "plates"){
+        isplateselected = true;
+        plate_selected_name = platesnames[idproduct -1];
+        plate_selected_price = platesprices[idproduct -1];
+    }
+    else if(idfood == "drinks"){
+        isdrinkselected = true;
+        drink_selected_name = drinksnames[idproduct - 1];
+        drink_selected_price = drinksprices[idproduct - 1]
+    }
+    else if(idfood == "deserts"){
+        isdesertselected = true;
+        desert_selected_name = desertsnames[idproduct - 1];
+        desert_selected_price = desertsprices[idproduct - 1];
+    }
 
-function selectProduct1(){
+    let selectclass = "." + idfood;
+    let list_products = document.querySelector(selectclass);
+    let product = list_products.children[idproduct -1];
 
-    list_products = document.querySelector(".list-products")
-    product = list_products.querySelector(".card1");
+    for (let item of list_products.children){
+        if(item.classList.contains("selected")){
+            item.classList.remove("selected");
+            let selected_icon = item.querySelector("ion-icon");
+            selected_icon.classList.add("not-selected");
+        }
+    }
+
     product.classList.add("selected");
     selected_icon = product.querySelector("ion-icon");
     selected_icon.classList.remove("not-selected");
+
+    test_all_selected();
 }
 
-function createProduct(){
-    let list_products = document.createElement("li");
-    list_products.style.display = "inline-block";
-    list_products.classList.add("card-product");
-
-    let name_product = document.createElement("p");
-    name_product.classList.add("name-product");
-    name_product.innerHTML = "Pizza";
-    list_products.appendChild(name_product);
-    list_parent = document.querySelector(".products");
-
-    list_parent.appendChild(list_products);
+function disable_button(){
+    button = document.querySelector("button");
+    button.disabled = true;
+    button.innerHTML = "Selecione os 3 itens para fechar o pedido";
 }
 
+function test_all_selected(){
+    if(isplateselected  && isdrinkselected && isdesertselected){
+        let button = document.querySelector(".checkout");
+        button.disabled = false;
+        button.classList.remove("disabled");
+        button.classList.add("enabled");
+        button.innerHTML = "Fechar Pedido";
+    }
+}
 
+function sendWpp(){
+    let totalamount = plate_selected_price + drink_selected_price + desert_selected_price;
+    let phone = "5564993234149";
+    let str_wpp = "https://wa.me/" + phone;
+
+    let str_msg = "Olá, gostaria de fazer o pedido:\n";
+    str_msg = str_msg + "- Prato: " + plate_selected_name + "\n";
+    str_msg = str_msg + "- Bebida: " + drink_selected_name + "\n";
+    str_msg = str_msg + "- Sobremesa: " + desert_selected_name + "\n";
+    str_msg = str_msg + "Total: R$ " + totalamount.toFixed(2) + "\n";
+
+    str_wpp = str_wpp + "?text=" + encodeURIComponent(str_msg);
+    window.open(str_wpp);
+}
