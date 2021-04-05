@@ -207,9 +207,35 @@
     </div>
 
     <div class="bottom-button">
-        <button class="checkout disabled" onClick="sendWpp()"></button>
+        <button class="checkout disabled" onClick="closeSell()"></button>
     </div>
 
+    <div class="confirmation-box not-confirming">
+        <div class="info-box">
+            <p class="title-info-box">Confirme seu pedido</p>
+            <div class="box-dynamic">
+                <div class="line-confirming">
+                    <p class="text-confirming platename"></p>
+                    <p class="text-confirming plateprice"></p>
+                </div>
+                <div class="line-confirming">
+                    <p class="text-confirming drinkname"></p>
+                    <p class="text-confirming drinkprice"></p>
+                </div>
+                <div class="line-confirming">
+                    <p class="text-confirming desertname"></p>
+                    <p class="text-confirming desertprice"></p>
+                </div>
+                <div class="line-confirming">
+                    <p class="text-confirming total">TOTAL</p>
+                    <p class="text-confirming total totalprice"></p>
+                </div>
+            </div>
+            <button class="final-check" onClick="sendWpp()">Tudo certo, pode pedir!</button>
+            <p class="title-info-box" onClick="close_restart()">Cancelar</p>
+            
+        </div>
+    </div>
 
 
     <!-- JS Scripts-->

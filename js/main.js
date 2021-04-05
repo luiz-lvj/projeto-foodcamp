@@ -18,6 +18,9 @@ let drinksprices = [];
 let desertsnames = [];
 let desertsprices = [];
 
+let c_name = "";
+let c_address = "";
+
 /* Initializing Page */
 disable_button();
 
@@ -119,7 +122,7 @@ function selectProduct(idfood, idproduct){
 }
 
 function disable_button(){
-    button = document.querySelector("button");
+    button = document.querySelector(".checkout");
     button.disabled = true;
     button.innerHTML = "Selecione os 3 itens para fechar o pedido";
 }
@@ -134,17 +137,49 @@ function test_all_selected(){
     }
 }
 
+function closeSell(){
+    c_name = prompt("Qual seu nome?", "Digite seu nome...");
+    c_address = prompt("Qual seu endereço?", "Digite seu endereço...");
+    document.querySelector(".top").classList.add("move-back");
+    document.querySelector(".bottom-button").classList.add("move-back");
+
+    conf_box = document.querySelector(".confirmation-box");
+    conf_box.classList.remove("not-confirming");
+
+    document.querySelector(".platename").innerHTML = plate_selected_name;
+    document.querySelector(".plateprice").innerHTML = plate_selected_price.toFixed(2).replace(/\./g, ',');
+    document.querySelector(".drinkname").innerHTML = drink_selected_name;
+    document.querySelector(".drinkprice").innerHTML = drink_selected_price.toFixed(2).replace(/\./g, ',');
+    document.querySelector(".desertname").innerHTML = desert_selected_name;
+    document.querySelector(".desertprice").innerHTML = desert_selected_price.toFixed(2).replace(/\./g, ',');
+
+    let totalamount = plate_selected_price + drink_selected_price + desert_selected_price;
+    document.querySelector(".totalprice").innerHTML = totalamount.toFixed(2).replace(/\./g, ',');
+
+}
+
 function sendWpp(){
     let totalamount = plate_selected_price + drink_selected_price + desert_selected_price;
-    let phone = "5564993234149";
-    let str_wpp = "https://wa.me/" + phone;
+    let str_wpp = "https://wa.me/";
 
     let str_msg = "Olá, gostaria de fazer o pedido:\n";
     str_msg = str_msg + "- Prato: " + plate_selected_name + "\n";
     str_msg = str_msg + "- Bebida: " + drink_selected_name + "\n";
     str_msg = str_msg + "- Sobremesa: " + desert_selected_name + "\n";
     str_msg = str_msg + "Total: R$ " + totalamount.toFixed(2) + "\n";
+    str_msg = str_msg + "\nNome: " + c_name + "\n";
+    str_msg = str_msg + "Endereço: " + c_address + "\n";
 
     str_wpp = str_wpp + "?text=" + encodeURIComponent(str_msg);
     window.open(str_wpp);
+
+    close_success();
+}
+function close_restart(){
+    alert("Pedido cancelado com sucesso!");
+    window.location.reload();
+}
+function close_success(){
+    alert("Pedido enviado com sucesso!");
+    window.location.reload();
 }
