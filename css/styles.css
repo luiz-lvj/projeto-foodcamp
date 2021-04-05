@@ -121,8 +121,8 @@ div, ul, li{
     border-radius: 50px;
     font-size: 20px;
     color: #FFFFFF;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 .checkout.disabled{
     background: #CBCBCB;
